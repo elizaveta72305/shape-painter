@@ -1,0 +1,10 @@
+
+
+
+<ng-container *ngFor="let shape of shapes; let i = index">
+  <svg [id]="shape.id" class="shape" width="400" height="400" (click)="selectShape(shape.id)">
+    <ng-container *ngFor="let line of shape.lines">
+      <line [attr.x1]="line.from.x" [attr.y1]="line.from.y" [attr.x2]="line.to.x" [attr.y2]="line.to.y" [attr.stroke]="shape.selected ? selectedColor : 'black'"></line>
+    </ng-container>
+  </svg>
+</ng-container>
