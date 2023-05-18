@@ -7,10 +7,10 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-  shapeId = 'myShape';
-  selectedColor = '';
+//   shapeId = 'myShape';
+//   selectedColor = '';
 
-  changeColor(color: string) {
-    this.selectedColor = color;
-  }
+//   changeColor(color: string) {
+//     this.selectedColor = color;
+//   }
 }
