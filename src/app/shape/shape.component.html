@@ -7,7 +7,7 @@
   <g (click)="onShapeClick(shape)">
   <ng-container *ngFor="let line of shape.lines">
     <line [attr.x1]="line.from.x" [attr.y1]="line.from.y" [attr.x2]="line.to.x" [attr.y2]="line.to.y"
-    [ngStyle]="{'stroke': shape.selected ? shape.color : basicColor}">
+    [ngStyle]="{'stroke': shape.selected ? shape.color : shape.color}">
   </line>
     </ng-container>
     </g>
