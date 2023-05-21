@@ -19,6 +19,8 @@
   <ng-container *ngFor="let shape of shapes">
     {{shape.selected}}
     </ng-container>
-
-  <button *ngFor="let color of colors" (click)="changeShapeColor(color)" [style.background-color]="color">{{color}}</button>
+    <h3>
+      Click on shape and choose color:
+      </h3>
+  <button *ngFor="let color of colors" (click)="changeShapeColor(color)" [style.bubble_chart]="color">{{color}}</button>
 </div>

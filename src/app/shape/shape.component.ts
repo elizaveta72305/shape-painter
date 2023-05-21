@@ -1,12 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-interface Shape {
-  shapeId: number,
-  lines: Line[],
-  selected: boolean,
-  color: string
-}
-
-
+import { Shape } from 'src/Interface/IShape';
 @Component({
   selector: 'app-shape',
   templateUrl: './shape.component.html',
@@ -47,15 +40,6 @@ export class ShapeComponent {
   constructor() {
     this.shapeId = this.generateShapeId();
   }
-
-  // selectShape(shape: Shape): void {
-  //   this.selectedShape = shape;
-  // }
-
-  // isShapeSelected(shape: Shape): boolean {
-  //   return this.selectedShape === shape;
-  // }
-
   changeShapeColor(newColor: string): void {
     const selectedShape = this.shapes.find(shape => shape.selected);
     if (selectedShape) {
@@ -75,15 +59,5 @@ export class ShapeComponent {
   private generateShapeId(): number {
     return Math.floor(Math.random() * 1000);
   }
-}
-
-interface Line {
-  from: Point;
-  to: Point;
-}
-
-interface Point {
-  x: number;
-  y: number;
 }
 
