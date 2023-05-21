@@ -1,10 +1,24 @@
 
-<div [id]="shapeId" [ngStyle]="{'border-color': selectedColor}"></div>
+
+<!-- <div [id]="shapeId" [ngStyle]="{'border-color': basicColor}"></div> -->
+
+<svg width="500" height="300">
+<ng-container *ngFor="let shape of shapes">
+  <g (click)="onShapeClick(shape)">
+  <ng-container *ngFor="let line of shape.lines">
+    <line [attr.x1]="line.from.x" [attr.y1]="line.from.y" [attr.x2]="line.to.x" [attr.y2]="line.to.y"
+    [ngStyle]="{'stroke': shape.selected ? shape.color : basicColor}">
+  </line>
+    </ng-container>
+    </g>
+  </ng-container>
+</svg>
 
 <div>
-  <button (click)="changeColor('red')">Red</button>
-  <button (click)="changeColor('blue')">Blue</button>
-  <button (click)="changeColor('green')">Green</button>
+  <h3>Это как ты кликаешь на фигуры:</h3>
+  <ng-container *ngFor="let shape of shapes">
+    {{shape.selected}}
+    </ng-container>
+
+  <button *ngFor="let color of colors" (click)="changeShapeColor(color)" [style.background-color]="color">{{color}}</button>
 </div>
-
-
