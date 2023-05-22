@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Shape } from 'src/Interface/IShape';
+import { saveAs } from 'file-saver';
+import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-shape',
   templateUrl: './shape.component.html',
@@ -7,9 +9,9 @@ import { Shape } from 'src/Interface/IShape';
 })
 
 export class ShapeComponent {
-  shapeId: number;
+  //shapeId: number;
   selectedShape: Shape | null = null;
-  colors: string[] = ['black', 'red', 'blue', 'green'];
+  colors: string[] = ['orange', 'red', 'blue', 'green', 'yellow', 'pink'];
   basicColor = 'black';
 
   shapes: Shape[] = [
@@ -37,9 +39,9 @@ export class ShapeComponent {
   }
   ];
 
-  constructor() {
-    this.shapeId = this.generateShapeId();
+  constructor(private http: HttpClient) {
   }
+
   changeShapeColor(newColor: string): void {
     const selectedShape = this.shapes.find(shape => shape.selected);
     if (selectedShape) {
@@ -56,8 +58,79 @@ export class ShapeComponent {
       }
     });
   }
-  private generateShapeId(): number {
-    return Math.floor(Math.random() * 1000);
+
+  onCheckboxChange(shape: Shape): void {
+    this.shapes.forEach(s => {
+      if (s === shape) {
+        s.selected = true;
+      } else {
+        s.selected = false;
+      }
+    });
+  }
+
+  saveShapes(): void {
+    const data = JSON.stringify(this.shapes);
+    const blob = new Blob([data], { type: 'application/json' });
+    saveAs(blob, 'shapes.json');
+  }
+
+//   loadShapes(event: Event): void {
+//     const fileInput = event.target as HTMLInputElement;
+//     const file = fileInput.files?.[0];
+
+//     if (file) {
+//       const reader = new FileReader();
+//       reader.onload = () => {
+//         const fileData = reader.result as string;
+//             this.http.get<Shape[]>('/assets/shapes.json').subscribe(
+//       (data: Shape[]) => {
+//         this.shapes = data;
+//         try {
+//           const loadedShapes = JSON.parse(fileData) as Shape[];
+//           this.shapes = loadedShapes;
+//         } catch (error) {
+//           console.error('Error loading shapes:', error);
+//         }
+//       });
+//       reader.readAsText(file);
+//     }
+//   }
+// }
+
+// loadShapes(): void {
+//   this.http.get<Shape[]>('/assets/shapes.json').subscribe(
+//     (data: Shape[]) => {
+//       this.shapes = data;
+//     },
+//     (error: any) => {
+//       console.error('Error loading shapes:', error);
+//     }
+//   );
+// }
+
+onFileSelected(event: Event): void {
+  const inputElement = event.target as HTMLInputElement;
+  const file = inputElement.files?.[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const contents = e.target?.result as string;
+      if (contents) {
+        try {
+          const data = JSON.parse(contents);
+          this.shapes = data;
+        } catch (error) {
+          console.error('Error parsing JSON file:', error);
+        }
+      }
+    };
+    reader.readAsText(file);
   }
 }
 
+
+private generateShapeId(): number {
+  return Math.floor(Math.random() * 1000);
+}
+}

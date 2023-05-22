@@ -1,8 +1,6 @@
 
 
-<!-- <div [id]="shapeId" [ngStyle]="{'border-color': basicColor}"></div> -->
-
-<svg width="500" height="300">
+<svg width="1200" height="200">
 <ng-container *ngFor="let shape of shapes">
   <g (click)="onShapeClick(shape)">
   <ng-container *ngFor="let line of shape.lines">
@@ -14,13 +12,25 @@
   </ng-container>
 </svg>
 
+<h3>Select a shape:</h3>
+<div *ngFor="let shape of shapes">
+  <input type="radio" [checked]="shape.selected" (change)="onCheckboxChange(shape)" />
+  <label>{{ shape.shapeId }}</label>
+</div>
+
 <div>
-  <h3>Это как ты кликаешь на фигуры:</h3>
-  <ng-container *ngFor="let shape of shapes">
-    {{shape.selected}}
-    </ng-container>
-    <h3>
-      Click on shape and choose color:
-      </h3>
-  <button *ngFor="let color of colors" (click)="changeShapeColor(color)" [style.bubble_chart]="color">{{color}}</button>
+  <h3>Click on shape and choose color:</h3>
+  <button *ngFor="let color of colors" (click)="changeShapeColor(color)" [style.backgroundColor]="color">
+    {{ color }}
+  </button>
+</div>
+
+<div>
+  <button (click)="saveShapes()">Save</button>
+  <!-- <input type="file" (change)="loadShapes($event)" /> -->
+  <!-- <button (click)="loadShapes()">Load</button> -->
+  <input type="file" (change)="onFileSelected($event)" accept=".json" />
+<!-- <button (click)="loadShapes()">Load</button> -->
+
+  <!-- <button (click)="loadShapes()">Load</button> -->
 </div>
