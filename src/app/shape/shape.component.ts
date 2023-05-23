@@ -75,41 +75,7 @@ export class ShapeComponent {
     saveAs(blob, 'shapes.json');
   }
 
-//   loadShapes(event: Event): void {
-//     const fileInput = event.target as HTMLInputElement;
-//     const file = fileInput.files?.[0];
-
-//     if (file) {
-//       const reader = new FileReader();
-//       reader.onload = () => {
-//         const fileData = reader.result as string;
-//             this.http.get<Shape[]>('/assets/shapes.json').subscribe(
-//       (data: Shape[]) => {
-//         this.shapes = data;
-//         try {
-//           const loadedShapes = JSON.parse(fileData) as Shape[];
-//           this.shapes = loadedShapes;
-//         } catch (error) {
-//           console.error('Error loading shapes:', error);
-//         }
-//       });
-//       reader.readAsText(file);
-//     }
-//   }
-// }
-
-// loadShapes(): void {
-//   this.http.get<Shape[]>('/assets/shapes.json').subscribe(
-//     (data: Shape[]) => {
-//       this.shapes = data;
-//     },
-//     (error: any) => {
-//       console.error('Error loading shapes:', error);
-//     }
-//   );
-// }
-
-onFileSelected(event: Event): void {
+  onFileSelected(event: Event): void {
   const inputElement = event.target as HTMLInputElement;
   const file = inputElement.files?.[0];
   if (file) {
@@ -129,6 +95,43 @@ onFileSelected(event: Event): void {
   }
 }
 
+shapeWidth(shape: Shape): number {
+  // Find the minimum and maximum x coordinates of the shape's lines
+  const xCoordinates = shape.lines.map(line => [line.from.x, line.to.x]).flat();
+  const minX = Math.min(...xCoordinates);
+  const maxX = Math.max(...xCoordinates);
+
+  // Calculate the width by subtracting the minimum x from the maximum x
+  return maxX - minX;
+}
+
+shapeHeight(shape: Shape): number {
+  // Find the minimum and maximum y coordinates of the shape's lines
+  const yCoordinates = shape.lines.map(line => [line.from.y, line.to.y]).flat();
+  const minY = Math.min(...yCoordinates);
+  const maxY = Math.max(...yCoordinates);
+
+  // Calculate the height by subtracting the minimum y from the maximum y
+  return maxY - minY;
+}
+
+shapeX(shape: Shape): number {
+  // Find the minimum x coordinate of the shape's lines
+  const xCoordinates = shape.lines.map(line => [line.from.x, line.to.x]).flat();
+  const minX = Math.min(...xCoordinates);
+
+  // Return the minimum x coordinate
+  return minX;
+}
+
+shapeY(shape: Shape): number {
+  // Find the minimum y coordinate of the shape's lines
+  const yCoordinates = shape.lines.map(line => [line.from.y, line.to.y]).flat();
+  const minY = Math.min(...yCoordinates);
+
+  // Return the minimum y coordinate
+  return minY;
+}
 
 private generateShapeId(): number {
   return Math.floor(Math.random() * 1000);
