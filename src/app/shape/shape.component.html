@@ -1,8 +1,7 @@
 
 
-<svg width="1200" height="320">
+<svg width="1200" height="250">
 <ng-container *ngFor="let shape of shapes">
-  <!-- <g (click)="onShapeClick(shape)"> -->
     <rect
         [attr.width]="shapeWidth(shape)"
         [attr.height]="shapeHeight(shape)"
@@ -10,10 +9,14 @@
         [attr.y]="shapeY(shape)"
         fill="transparent"
         (click)="onShapeClick(shape)"
+        (mouseover)="onShapeHover(shape)"
+        (mouseleave)="onShapeLeave()"
       ></rect>
   <ng-container *ngFor="let line of shape.lines">
     <line [attr.x1]="line.from.x" [attr.y1]="line.from.y" [attr.x2]="line.to.x" [attr.y2]="line.to.y"
-    [ngStyle]="{'stroke': shape.selected ? shape.color : shape.color}">
+    [ngStyle]="{'stroke': shape.selected ? shape.color : shape.color}"
+    [ngClass]="{ 'shape-hover': shape === hoveredShape }"
+    >
   </line>
     </ng-container>
     <!-- </g> -->

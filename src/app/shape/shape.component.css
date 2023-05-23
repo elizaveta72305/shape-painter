@@ -10,3 +10,8 @@ line {
 button {
   margin-top: 10px;
 }
+
+.shape-hover {
+  stroke-width: 6;
+  stroke-opacity: 1; 
+}

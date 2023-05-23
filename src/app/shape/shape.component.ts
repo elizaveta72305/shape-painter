@@ -11,6 +11,7 @@ export class ShapeComponent {
   selectedShape: Shape | null = null;
   colors: string[] = ['orange', 'red', 'blue', 'green', 'yellow', 'pink'];
   basicColor = 'black';
+  hoveredShape: Shape | null = null;
 
   shapes: Shape[] = [
     {
@@ -20,9 +21,7 @@ export class ShapeComponent {
       { from: { x: 150, y: 0 }, to: { x: 150, y: 150 } },
       { from: { x: 150, y: 150 }, to: { x: 0, y: 150 } },
       { from: { x: 0, y: 150 }, to: { x: 0, y: 0 } }
-    ],
-    selected: false,
-    color: 'black'
+    ], selected: false, color: 'black'
     },
     {
     shapeId: 2,
@@ -31,11 +30,9 @@ export class ShapeComponent {
       { from: { x: 350, y: 0 }, to: { x: 350, y: 150 } },
       { from: { x: 350, y: 150 }, to: { x: 200, y: 150 } },
       { from: { x: 200, y: 150 }, to: { x: 200, y: 0 } }
-    ],
-    selected: false,
-    color: 'black'
+    ], selected: false, color: 'black'
   }
-  ];
+];
 
   changeShapeColor(newColor: string): void {
     const selectedShape = this.shapes.find(shape => shape.selected);
@@ -115,4 +112,13 @@ shapeY(shape: Shape): number {
   const minY = Math.min(...yCoordinates);
   return minY;
 }
+
+onShapeHover(shape: Shape): void {
+  this.hoveredShape = shape;
+}
+
+onShapeLeave(): void {
+  this.hoveredShape = null;
+}
+
 }
