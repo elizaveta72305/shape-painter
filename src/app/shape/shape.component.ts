@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Shape } from 'src/Interface/IShape';
 import { saveAs } from 'file-saver';
-import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-shape',
   templateUrl: './shape.component.html',
@@ -9,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
 })
 
 export class ShapeComponent {
-  //shapeId: number;
   selectedShape: Shape | null = null;
   colors: string[] = ['orange', 'red', 'blue', 'green', 'yellow', 'pink'];
   basicColor = 'black';
@@ -38,9 +36,6 @@ export class ShapeComponent {
     color: 'black'
   }
   ];
-
-  constructor(private http: HttpClient) {
-  }
 
   changeShapeColor(newColor: string): void {
     const selectedShape = this.shapes.find(shape => shape.selected);
@@ -96,44 +91,28 @@ export class ShapeComponent {
 }
 
 shapeWidth(shape: Shape): number {
-  // Find the minimum and maximum x coordinates of the shape's lines
   const xCoordinates = shape.lines.map(line => [line.from.x, line.to.x]).flat();
   const minX = Math.min(...xCoordinates);
   const maxX = Math.max(...xCoordinates);
-
-  // Calculate the width by subtracting the minimum x from the maximum x
   return maxX - minX;
 }
 
 shapeHeight(shape: Shape): number {
-  // Find the minimum and maximum y coordinates of the shape's lines
   const yCoordinates = shape.lines.map(line => [line.from.y, line.to.y]).flat();
   const minY = Math.min(...yCoordinates);
   const maxY = Math.max(...yCoordinates);
-
-  // Calculate the height by subtracting the minimum y from the maximum y
   return maxY - minY;
 }
 
 shapeX(shape: Shape): number {
-  // Find the minimum x coordinate of the shape's lines
   const xCoordinates = shape.lines.map(line => [line.from.x, line.to.x]).flat();
   const minX = Math.min(...xCoordinates);
-
-  // Return the minimum x coordinate
   return minX;
 }
 
 shapeY(shape: Shape): number {
-  // Find the minimum y coordinate of the shape's lines
   const yCoordinates = shape.lines.map(line => [line.from.y, line.to.y]).flat();
   const minY = Math.min(...yCoordinates);
-
-  // Return the minimum y coordinate
   return minY;
-}
-
-private generateShapeId(): number {
-  return Math.floor(Math.random() * 1000);
 }
 }

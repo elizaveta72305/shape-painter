@@ -12,9 +12,6 @@
         (click)="onShapeClick(shape)"
       ></rect>
   <ng-container *ngFor="let line of shape.lines">
-
-
-
     <line [attr.x1]="line.from.x" [attr.y1]="line.from.y" [attr.x2]="line.to.x" [attr.y2]="line.to.y"
     [ngStyle]="{'stroke': shape.selected ? shape.color : shape.color}">
   </line>
@@ -38,10 +35,5 @@
 
 <div>
   <button (click)="saveShapes()">Save</button>
-  <!-- <input type="file" (change)="loadShapes($event)" /> -->
-  <!-- <button (click)="loadShapes()">Load</button> -->
   <input type="file" (change)="onFileSelected($event)" accept=".json" />
-<!-- <button (click)="loadShapes()">Load</button> -->
-
-  <!-- <button (click)="loadShapes()">Load</button> -->
 </div>
